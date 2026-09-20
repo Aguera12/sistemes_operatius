@@ -6,12 +6,11 @@
 :root {
   --mari: #122542;
   --teal: #0c6e73;
-  --ambre: #c9821f;
-  --tinta: #1b2430;
-  --tinta-suau: #57626c;
-  --fons: #f5f6f8;
-  --blanc: #ffffff;
-  --vora: #dde2e7;
+  --tinta: #14213d;
+  --tinta-suau: #4a5d73;
+  --fons: #d9e3ed;
+  --blanc: #edf3f8;
+  --vora: #c2d1e0;
   --radi: 12px;
 }
 
@@ -36,9 +35,9 @@ a:hover { text-decoration: underline; }
 
 /* ---------- Capçalera / hero (present a totes les pàgines) ---------- */
 .hero {
-  background: linear-gradient(125deg, var(--mari) 0%, var(--teal) 55%, var(--ambre) 100%);
+  background: linear-gradient(125deg, var(--mari) 0%, var(--teal) 100%);
   padding-bottom: 60px;
-  color: var(--blanc);
+  color: #ffffff;
 }
 
 .hero-nav {
