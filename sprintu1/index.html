@@ -29,74 +29,79 @@
         <tr><th>#</th><th>Apartat</th></tr>
       </thead>
       <tbody>
-        <tr><td>1</td><td><a href="#apartat1">Instal·lació del sistema operatiu</a></td></tr>
-        <tr><td>2</td><td><a href="#apartat2">Configuració de xarxa bàsica</a></td></tr>
-        <tr><td>3</td><td><a href="#apartat3">Creació d'usuaris i grups</a></td></tr>
-        <tr><td>4</td><td><a href="#apartat4">Comprovació final</a></td></tr>
+        <tr><td>1</td><td><a href="#apartat1">Instal·lació de paquets</a></td></tr>
       </tbody>
     </table>
 
     <article class="apartat" id="apartat1">
-      <h2>1. Instal·lació del sistema operatiu</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Un cop arrencat
-         el suport d'instal·lació, cal seguir l'assistent i triar les opcions de
-         particionat abans de continuar. <strong>Aquest pas és irreversible</strong>,
-         així que revisa bé el disc de destinació.</p>
-      <ul>
-        <li>Arrencar des del USB o la imatge ISO.</li>
-        <li>Triar l'idioma i la distribució de teclat.</li>
-        <li>Configurar el particionat del disc.</li>
-        <li>Esperar que finalitzi la còpia d'arxius i reiniciar.</li>
-      </ul>
-      <img src="../img/exemple.svg" alt="Exemple de captura de pantalla de l'assistent d'instal·lació">
-      <p>Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-         Un cop reiniciat el sistema, comprova que arrenca correctament i que
-         reconeix tot el maquinari abans de continuar amb el següent apartat.</p>
-      <p class="tornar-index"><a href="#index-apartats">↑ Tornar a l'índex</a></p>
-    </article>
-    <article class="apartat" id="apartat2">
-      <h2>2. Configuració de xarxa bàsica</h2>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-         ut aliquip ex ea commodo consequat. La configuració de xarxa és
-         <strong>imprescindible</strong> per poder actualitzar el sistema i
-         instal·lar programari nou.</p>
-      <ul>
-        <li>Comprovar l'adreça IP assignada amb <code>ip a</code>.</li>
-        <li>Configurar una IP estàtica si el servei ho requereix.</li>
-        <li>Verificar la connectivitat amb <code>ping</code>.</li>
-      </ul>
-      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-         dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-         proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p class="tornar-index"><a href="#index-apartats">↑ Tornar a l'índex</a></p>
-    </article>
-    <article class="apartat" id="apartat3">
-      <h2>3. Creació d'usuaris i grups</h2>
-      <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui
-         blanditiis praesentium voluptatum deleniti atque corrupti. Cada
-         usuari nou s'hauria d'assignar al <strong>grup mínim necessari</strong>
-         segons les tasques que ha de fer.</p>
-      <img src="../img/exemple.svg" alt="Exemple de captura de pantalla de la gestió d'usuaris">
-      <ul>
-        <li>Crear l'usuari amb <code>useradd</code>.</li>
-        <li>Assignar contrasenya amb <code>passwd</code>.</li>
-        <li>Afegir l'usuari als grups necessaris amb <code>usermod -aG</code>.</li>
-      </ul>
-      <p class="tornar-index"><a href="#index-apartats">↑ Tornar a l'índex</a></p>
-    </article>
-    <article class="apartat" id="apartat4">
-      <h2>4. Comprovació final</h2>
-      <p>Et harum quidem rerum facilis est et expedita distinctio. Nam libero
-         tempore, cum soluta nobis est eligendi optio cumque nihil impedit.
-         Abans de donar per acabat el sprint, revisa aquest resum:</p>
-      <ul>
-        <li>El sistema arrenca sense errors.</li>
-        <li>La xarxa respon correctament als <em>pings</em>.</li>
-        <li><strong>Els usuaris i grups creats coincideixen amb l'enunciat.</strong></li>
-      </ul>
-      <p>Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
-         fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem
-         sequi nesciunt.</p>
+      <h2>1. Instal·lació de paquets</h2>
+      <p>Primer de tot, fem un <code><strong>apt-cache policy smplayer</strong></code> per comprovar el candidat actual (versió 25):</p>
+      
+      <pre><code>root@SistemesInformatics:/etc/apt/preferences.d# apt-cache policy smplayer
+smplayer:
+Instalados: (ninguno)
+Candidato: 25.6.0+ds-1
+Tabla de versión:
+25.6.0+ds-1 500
+500 http://es.archive.ubuntu.com/ubuntu resolute/universe amd64 Packages
+root@SistemesInformatics:/etc/apt/preferences.d#</code></pre>
+
+      <!-- Espai per a la imatge si cal -->
+      <img src="./img/Captura1.png">
+
+      <p>Crearem el fitxer <code><strong>smplayer</strong></code> en el directori <code><strong>/etc/apt/preferences.d/</strong></code> i farem un update:</p>
+      
+      <pre><code>root@SistemesInformatics:/etc/apt/preferences.d# nano smplayer
+root@SistemesInformatics:/etc/apt/preferences.d# apt update</code></pre>
+
+      <p>Contingut del fitxer <code><strong>/etc/apt/preferences.d/smplayer</strong></code>:</p>
+      <pre><code>Package: smplayer
+Pin: version 21.10.0*
+Pin-Priority: 1001</code></pre>
+
+      <!-- Espai per a la imatge si cal -->
+      <img src="./img/Captura2.png">
+
+      <p>Crearem el fitxer <code><strong>jammy.list</strong></code> en el directori <code><strong>/etc/apt/sources.list.d/</strong></code> i farem un update:</p>
+      
+      <pre><code>root@SistemesInformatics:/etc/apt/preferences.d# nano /etc/apt/sources.list.d/jammy.list
+root@SistemesInformatics:/etc/apt/preferences.d# sudo apt update</code></pre>
+
+      <p>Contingut del fitxer <code><strong>/etc/apt/sources.list.d/jammy.list</strong></code>:</p>
+      <pre><code>deb http://archive.ubuntu.com/ubuntu jammy universe</code></pre>
+
+      <!-- Espai per a la imatge si cal -->
+      <img src="./img/Captura3.png">
+
+      <p>Amb tot el procés completat, tornarem a executar la comanda <code><strong>apt-cache policy smplayer</strong></code> per comprovar el nou candidat, que ara és la versió 21.10.0:</p>
+      
+      <pre><code>root@SistemesInformatics:/etc/apt/preferences.d# apt-cache policy smplayer
+smplayer:
+Instalados: (ninguno)
+Candidato: 21.10.0-ds0-1
+Tabla de versión:
+25.6.0+ds-1 500
+500 http://es.archive.ubuntu.com/ubuntu resolute/universe amd64 Packages
+21.10.0-ds0-1 1001
+500 http://archive.ubuntu.com/ubuntu jammy/universe amd64 Packages
+root@SistemesInformatics:/etc/apt/preferences.d#</code></pre>
+
+      <!-- Espai per a la imatge si cal -->
+      <img src="./img/Captura4.png">
+
+      <p>Instal·lem el <strong>SMPlayer</strong>:</p>
+      <pre><code>root@SistemesInformatics:/etc/apt/preferences.d# apt install smplayer</code></pre>
+
+      <!-- Espai per a la imatge si cal -->
+      <img src="./img/Captura5.png">
+
+      <p>Executarem el SMPlayer, el qual directament ens confirma que comptem amb la versió 21.10.0:</p>
+      <pre><code>root@SistemesInformatics:/etc/apt/preferences.d# smplayer
+This is SMPlayer v. 21.10.0 (revision 10000) running on Linux</code></pre>
+
+      <!-- Espai per a la imatge si cal -->
+      <img src="./img/Captura6.png">
+
       <p class="tornar-index"><a href="#index-apartats">↑ Tornar a l'índex</a></p>
     </article>
   </section>
