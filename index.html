@@ -1,52 +1,95 @@
 <!DOCTYPE html>
 <html lang="ca">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sistemes Operatius - Portada</title>
-<link rel="stylesheet" href="css/estils.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistemes Operatius - Portada</title>
+    <link rel="stylesheet" href="css/estilsIndex.css">
 </head>
 <body>
-
 <header class="hero">
-  <nav class="hero-nav">
-    <a href="index.html">Portada</a>
-    <a href="ubuntu.html">Ubuntu</a>
-    <a href="windows.html">Windows</a>
-  </nav>
-  <div class="hero-titol">
-    <h1>Sistemes Operatius</h1>
-    <p class="subtitol">Mòdul ISOPJ1 · Cicle Formatiu de Grau Superior</p>
-  </div>
+    <nav class="hero-nav" aria-label="Navegació principal">
+        <a href="index.html">Portada</a>
+        <a href="ubuntu.html">Ubuntu</a>
+        <a href="windows.html">Windows</a>
+    </nav>
+    <div class="hero-titol">
+        <h1>Sistemes Operatius</h1>
+        <p class="subtitol">Mòdul ISOPJ1 · Cicle Formatiu de Grau Superior</p>
+    </div>
 </header>
 
 <main class="contenidor">
-  <section class="panell portada-hero">
-    <img src="img/portada.svg" alt="Il·lustració d'un terminal de sistema operatiu" class="imatge-portada">
+    <section class="panell portada-hero">
+        <div class="fitxa-alumne">
+            <p><strong>Alumne/a:</strong> Víctor Agüera Rodriguez</p>
+            <p><strong>Curs:</strong> 2026-2027</p>
+            <p><strong>Centre:</strong> IES Ebre</p>
+            <p><strong>Repositori:</strong> sistemes_operatius</p>
+        </div>
 
-    <div class="fitxa-alumne">
-      <p><strong>Alumne/a:</strong> Víctor Agüera Rodriguez</p>
-      <p><strong>Curs:</strong> 2026-2027</p>
-      <p><strong>Centre:</strong> IES Ebre</p>
-      <p><strong>Repositori:</strong> sistemes_operatius</p>
-    </div>
+        <h2>Pac-Man dels sistemes operatius</h2>
+        <p class="descripcio-joc">
+            Recull els punts i supera els nivells. Evita els fantasmes taronges
+            o menja una pastilla especial per poder-los atrapar.
+        </p>
 
-    <br>
-    <a class="boto" href="ubuntu.html">Ubuntu →</a>
-    <a class="boto" href="windows.html">Windows →</a>
+        <div class="marc-joc">
+            <div class="marcador">
+                <span>PUNTS: <strong id="punts">0</strong></span>
+                <span>NIVELL: <strong id="nivell">1</strong></span>
+                <span class="controls-text">CONTROLS: ← ↑ → ↓ / WASD</span>
+            </div>
 
-  </section>
+            <canvas id="pacmanCanvas" width="570" height="570"
+                    aria-label="Joc Pac-Man. Mou-te amb les fletxes o WASD."
+                    tabindex="0"></canvas>
+
+            <p id="missatge" class="missatge-joc" aria-live="polite">
+                Prem una fletxa o WASD per començar.
+            </p>
+
+            <div class="controls-mobils" aria-label="Controls tàctils">
+                <button type="button" data-dir="up" aria-label="Amunt">▲</button>
+                <div>
+                    <button type="button" data-dir="left" aria-label="Esquerra">◀</button>
+                    <button type="button" data-dir="down" aria-label="Avall">▼</button>
+                    <button type="button" data-dir="right" aria-label="Dreta">▶</button>
+                </div>
+            </div>
+
+            <button id="reiniciar" class="boto boto-reiniciar" type="button">
+                Reiniciar partida
+            </button>
+        </div>
+
+        <p class="indicacio-joc">Recull tots els punts per passar de nivell. Les pastilles grans tornen vulnerables els fantasmes durant uns segons.</p>
+
+        <div class="enllacos-sistemes">
+            <a class="boto boto-ubuntu" href="ubuntu.html">Ubuntu →</a>
+            <a class="boto boto-windows" href="windows.html">Windows →</a>
+        </div>
+    </section>
 </main>
 
 <footer class="peu">
-  <p class="peu-llicencia">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="license noopener">
-      <img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="Llicència Creative Commons Reconeixement-NoComercial-CompartirIgual 4.0" width="88" height="31">
-    </a>
-    <span>Contingut sota llicència <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca" target="_blank" rel="license noopener">CC BY-NC-SA 4.0</a></span>
-  </p>
-  <p class="autoria">Autor/a: <strong>Víctor Agüera Rodriguez</strong> · Pràctica 0 · Sistemes Operatius (ISOPJ1)</p>
+    <p class="peu-llicencia">
+        <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca"
+           target="_blank" rel="license noopener">
+            <img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png"
+                 alt="Llicència Creative Commons Reconeixement-NoComercial-CompartirIgual 4.0"
+                 width="88" height="31">
+        </a>
+        <span>Contingut sota llicència
+            <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.ca"
+               target="_blank" rel="license noopener">CC BY-NC-SA 4.0</a>
+        </span>
+    </p>
+    <p class="autoria">
+        Autor/a: <strong>Víctor Agüera Rodriguez</strong> · Pràctica 0 · Sistemes Operatius (ISOPJ1)
+    </p>
 </footer>
 
+<script src="js/pacman.js"></script>
 </body>
 </html>

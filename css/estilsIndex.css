@@ -1,0 +1,120 @@
+/* Estils de la portada amb el joc Pac-Man integrat */
+:root {
+    --mari: #101a38;
+    --teal: #245bff;
+    --tinta: #edf3ff;
+    --tinta-suau: #b8c8ec;
+    --fons: #070b18;
+    --blanc: #111c35;
+    --vora: #244baf;
+    --radi: 12px;
+    --ubuntu: #e95420;
+    --windows: #087bd1;
+    --groc: #ffdf00;
+}
+* { box-sizing: border-box; }
+html { min-height: 100%; background: var(--fons); }
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    color: var(--tinta);
+    background:
+        radial-gradient(ellipse at 50% 0%, #14234b 0%, #090e20 48%, #050812 100%);
+    line-height: 1.55;
+}
+a { color: #69a5ff; text-decoration: none; }
+a:hover { text-decoration: underline; }
+.contenidor { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+.hero {
+    color: white;
+    padding-bottom: 62px;
+    border-bottom: 1px solid #245bff;
+    background: linear-gradient(125deg, rgba(7,11,24,.97), rgba(16,29,73,.96));
+}
+.hero-nav {
+    display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+    padding: 18px 20px 0;
+}
+.hero-nav a {
+    color: #f5f7ff; background: rgba(8,15,37,.8);
+    border: 1px solid #315dff; padding: 7px 16px;
+    border-radius: 999px; font-size: .85rem; transition: background .15s;
+}
+.hero-nav a:hover { background: #203b86; text-decoration: none; }
+.hero-titol { text-align: center; padding: 28px 20px 0; }
+.hero-titol h1 {
+    margin: 0 0 8px; font-size: clamp(1.8rem, 4vw, 2.6rem);
+    text-transform: uppercase; letter-spacing: 2px; color: var(--groc);
+    text-shadow: 0 0 18px #ffdf0030;
+}
+.hero-titol p.subtitol { margin: 0; color: #c1d2ff; font-size: 1.02rem; }
+main { padding-bottom: 40px; }
+.panell {
+    background: #111c35; border: 1px solid #244baf; border-radius: var(--radi);
+    box-shadow: 0 14px 38px rgba(0,0,0,.28), 0 0 24px #174dff14;
+    margin-top: -42px; padding: 28px 30px 30px; position: relative; z-index: 1;
+}
+.portada-hero { text-align: center; }
+.fitxa-alumne {
+    display: inline-block; text-align: left; margin: -10px 0 8px;
+    padding: 12px 18px; background: #091126; border: 1px solid #2853bd;
+    border-radius: 9px; color: #edf3ff;
+}
+.fitxa-alumne p { margin: 2px 0; font-size: .92rem; }
+.fitxa-alumne strong { color: var(--groc); }
+.portada-hero h2 { margin: 8px 0 4px; color: var(--groc); font-size: 1.55rem; }
+.descripcio-joc { color: #c1d2ff; margin: 4px auto 18px; max-width: 720px; }
+.marc-joc {
+    width: 100%; max-width: 760px; margin: 20px auto 14px; padding: 14px;
+    background: #030611; border: 2px solid #174dff; border-radius: 10px;
+    box-shadow: 0 0 22px #174dff20; color: #f5f7ff;
+}
+.marcador {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 7px 16px; padding: 1px 3px 12px;
+    color: var(--groc); font-size: .83rem; font-weight: 800;
+}
+.marcador strong { color: #fff2a0; }
+.controls-text { margin-left: auto; }
+#pacmanCanvas {
+    display: block; width: 100%; max-width: 570px; height: auto;
+    margin: 0 auto; background: #03050d; border: 1px solid #193cbd;
+    border-radius: 4px; outline: none; image-rendering: pixelated;
+    touch-action: none;
+}
+.missatge-joc { min-height: 24px; margin: 10px 0 8px; color: #c4d4ff; font-size: .88rem; }
+.boto {
+    display: inline-block; border: 0; border-radius: 7px; padding: 10px 22px;
+    margin: 4px; color: white !important; font-weight: 700; cursor: pointer;
+    font-size: .92rem; text-decoration: none !important; transition: filter .15s, transform .15s;
+}
+.boto:hover { filter: brightness(1.13); transform: translateY(-1px); }
+.boto-reiniciar { background: #263f79; }
+.boto-ubuntu { background: var(--ubuntu); }
+.boto-windows { background: var(--windows); }
+.indicacio-joc { color: #9fb3dc; font-size: .82rem; margin: 10px 0 18px; }
+.enllacos-sistemes { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+.controls-mobils { display: none; margin: 10px auto; text-align: center; }
+.controls-mobils button {
+    min-width: 45px; min-height: 40px; margin: 3px; border: 1px solid #456bff;
+    border-radius: 8px; background: #14234b; color: white; font-size: 1.1rem; cursor: pointer;
+}
+footer.peu {
+    text-align: center; color: var(--tinta-suau); font-size: .85rem;
+    padding: 25px 20px 35px; border-top: 1px solid #244baf;
+}
+.peu-llicencia { display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap; margin: 0 0 8px; }
+.peu-llicencia img { display: block; }
+footer.peu .autoria { margin: 0; }
+footer.peu .autoria strong { color: var(--groc); }
+@media (max-width: 650px) {
+    .contenidor { padding: 0 10px; }
+    .panell { padding: 18px 10px 22px; }
+    .fitxa-alumne { max-width: 100%; }
+    .marc-joc { padding: 8px; }
+    .marcador { font-size: .74rem; }
+    .controls-text { margin-left: 0; }
+    .controls-mobils { display: block; }
+    .hero-titol { padding-top: 22px; }
+}
