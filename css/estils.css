@@ -321,3 +321,7 @@ footer.peu .autoria strong { color: var(--groc); }
   .hero-titol h1 { font-size: 1.7rem; }
   .taula-apartats { display: block; overflow-x: auto; }
 }
+
+#ImgProc {
+    width: 50%;
+}

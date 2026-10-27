@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ca">
 <head>
@@ -31,6 +32,7 @@
       <tbody>
         <tr><td>1</td><td><a href="#apartat1">Gestors de paquets</a></td></tr>
         <tr><td>2</td><td><a href="#apartat2">Permisos i propietaris d'arxius</a></td></tr>
+        <tr><td>3</td><td><a href="#apartat3">Processos</a></td></tr>
       </tbody>
     </table>
 
@@ -47,6 +49,7 @@
       </ul>
       <p class="tornar-index"><a href="#index-apartats">↑ Tornar a l'índex</a></p>
     </article>
+
     <article class="apartat" id="apartat2">
       <h2>2. Permisos i propietaris d'arxius</h2>
       <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
@@ -56,6 +59,93 @@
       <img src="../img/exemple.svg" alt="Exemple de captura de pantalla dels permisos d'un arxiu">
       <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
          dolore eu fugiat nulla pariatur.</p>
+      <p class="tornar-index"><a href="#index-apartats">↑ Tornar a l'índex</a></p>
+    </article>
+
+    <article class="apartat" id="apartat3">
+      <h2>3. Processos</h2>
+
+      <h3>3.1. Comprovació dels fitxers i execució dels processos</h3>
+      <p>Primer utilitzem la comanda <strong>ls -la</strong> per comprovar els
+         fitxers del directori i els seus permisos. Després executem l'script
+         <strong>sospitosos.sh</strong>, que inicia els processos de prova i
+         mostra el missatge «Fet. El servidor comença a anar lent…».</p>
+      <pre><code>ls -la
+./sospitosos.sh</code></pre>
+      <img src="./img/processos-01.png" alt="Comprovació dels fitxers i execució de l'script sospitosos.sh">
+
+      <p>Posteriorment, busquem els processos sospitosos dins de l'arbre de
+         processos amb <strong>pstree</strong>. Les captures originals agrupen
+         els processos trobats per facilitar-ne la visualització.</p>
+      <img id="ImgProc" src="./img/processos-02.png" alt="Cerca dels processos sospitosos dins de l'arbre de processos">
+
+      <h3>3.2. Identificació dels processos que consumeixen CPU</h3>
+      <p>Executem <strong>top</strong> per observar els processos en execució.
+         Si premem la tecla <strong>P</strong> en majúscula, els processos es
+         mostren ordenats segons el consum de CPU. Això permet identificar
+         els processos anomenats <em>minador</em> que consumeixen més recursos.</p>
+      <pre><code>top</code></pre>
+      <img src="./img/processos-03.png" alt="Resultat de top amb els processos minador ordenats pel consum de CPU">
+
+      <h3>3.3. Consulta dels identificadors dels processos</h3>
+      <p>Amb <strong>pgrep</strong> obtenim els identificadors (PID) dels
+         processos els noms dels quals coincideixen amb els termes
+         <em>minador</em>, <em>espia</em> o <em>backup</em>.</p>
+      <pre><code>pgrep -l 'minador|espia|backup'</code></pre>
+      <img src="./img/processos-04.png" alt="Llista dels PID dels processos minador, espia i backup">
+
+      <h3>3.4. Comprovació del procés pare (PPID)</h3>
+      <p>El <strong>PPID</strong> és l'identificador del procés pare d'un
+         procés. Comprovem si els processos identificats tenen com a pare
+         <strong>systemd</strong>, que apareix com a PID 1 en les captures.
+         Cal tenir en compte que els identificadors poden canviar quan es
+         reinicia la màquina virtual o es tornen a executar els processos.</p>
+      <p>(Aquesta captura compta amb IDs diferents degut a que és una captura posterior per reforçar el resultat simple de la primera)
+      <img src="./img/processos-05.png" alt="Comprovació de la relació entre els processos sospitosos i systemd">
+      <img src="./img/processos-06.png" alt="Taula dels processos de la descàrrega i estat actual en dues terminals">
+      <h3>3.5. Seguiment d'una descàrrega</h3>
+      <p>En aquesta part observem els processos relacionats amb una descàrrega
+         d'una ISO d'Ubuntu. A la terminal T1 es mostra la taula completa dels
+         processos en execució, mentre que a T2 es consulta l'estat actual
+         de la descàrrega.</p>
+      <img src="./img/processos-07.png" alt="">
+
+      <p>També utilitzem <strong>top</strong> per observar els processos
+         mentre la descàrrega continua avançant. La captura maximitzada
+         permet veure amb més claredat el nom del procés.</p>
+      <img src="./img/processos-08.png" alt="Taula dels processos de la descàrrega i estat actual en dues terminals">
+      <img src="./img/processos-09.png" alt="Vista maximitzada de la terminal amb el nom del procés de descàrrega">
+      <h3>3.6. Eliminació dels processos</h3>
+      <p>Intentem finalitzar els processos anomenats <em>espia</em> amb
+         la comanda <strong>kill</strong>. En el primer intent apareix un
+         error i el procés no s'elimina. Per forçar-ne la finalització,
+         utilitzem el senyal <strong>-9</strong> amb el PID corresponent.</p>
+      <pre><code>kill PID
+kill -9 PID</code></pre>
+      <p>Cal substituir <code>PID</code> per l'identificador real del procés
+         que volem finalitzar.</p>
+      <img src="./img/processos-10.png" alt="Error en intentar finalitzar un procés espia">
+      <img src="./img/processos-11.png" alt="Finalització forçada d'un procés amb kill -9">
+
+      <h3>3.7. Pausa i represa dels processos de backup</h3>
+      <p>També podem suspendre temporalment els processos de backup i reprendre
+         la seva execució posteriorment. Per fer-ho, utilitzem els senyals
+         <strong>STOP</strong> i <strong>CONT</strong>.</p>
+      <pre><code>kill -STOP PID
+kill -CONT PID</code></pre>
+      <p>El primer senyal pausa el procés i el segon permet que continuï
+         executant-se. En tots dos casos, hem d'indicar el PID correcte.</p>
+      <img src="./img/processos-12.png" alt="Backup stop">
+      <img src="./img/processos-13.png" alt="Backup cont">
+
+      <h3>3.8. Comprovació final de l'arbre de processos</h3>
+      <p>Finalment, utilitzem <strong>pstree</strong> per observar l'arbre
+         de processos. La T1 mostra el procés de descàrrega com a fill
+         de <strong>systemd</strong>. A l'altra terminal es pot veure la
+         interfície visual de la descàrrega de la ISO d'Ubuntu completada.</p>
+      <pre><code>pstree -p</code></pre>
+      <img src="./img/processos-14.png" alt="Descàrrega de la ISO d'Ubuntu completada">
+
       <p class="tornar-index"><a href="#index-apartats">↑ Tornar a l'índex</a></p>
     </article>
   </section>
@@ -73,3 +163,4 @@
 
 </body>
 </html>
+```
