@@ -31,7 +31,7 @@
       </thead>
       <tbody>
         <tr><td>1</td><td><a href="#apartat1">Gestors de paquets</a></td></tr>
-        <tr><td>2</td><td><a href="#apartat2">Permisos i propietaris d'arxius</a></td></tr>
+        <tr><td>2</td><td><a href="#apartat2">Recuperació de fitxers</a></td></tr>
         <tr><td>3</td><td><a href="#apartat3">Processos</a></td></tr>
       </tbody>
     </table>
@@ -51,14 +51,78 @@
     </article>
 
     <article class="apartat" id="apartat2">
-      <h2>2. Permisos i propietaris d'arxius</h2>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-         ut aliquip ex ea commodo consequat. Cada arxiu té un
-         <strong>propietari, un grup i uns permisos</strong> que en determinen
-         l'accés.</p>
-      <img src="../img/exemple.svg" alt="Exemple de captura de pantalla dels permisos d'un arxiu">
-      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-         dolore eu fugiat nulla pariatur.</p>
+      <h2>2. Recuperació de fitxers</h2>
+
+      <h3>2.1. Hash dels fitxers originals</h3>
+      <p>En la primera captura podem observar el resultat d'imprimir per
+         pantalla els <strong>hash</strong> dels nostres fitxers originals
+         (<em>foto.png</em>, <em>apunts.pdf</em> i <em>notes.txt</em>), que
+         farem servir més endavant per verificar la recuperació.</p>
+      <pre><code>cat originals.sha</code></pre>
+      <img src="./img/fitxers-01.png" alt="Hash dels fitxers originals mostrats amb cat originals.sha">
+
+      <h3>2.2. Recuperació amb PhotoRec</h3>
+      <p>En la segona captura podem observar com al directori
+         <strong>/mnt/prova2</strong> només hi queda la carpeta
+         <strong>lost+found</strong>.</p>
+      <p>(No és <em>/mnt/prova</em> perquè la primera vegada va donar error:
+         la imatge era descarregada d'internet i es va recuperar com a fitxer
+         «.txt». En la segona vaig utilitzar un PNG que era una captura de
+         pantalla.)</p>
+      <pre><code>ls -l /mnt/prova2</code></pre>
+      <img src="./img/fitxers-02.png" alt="Contingut del directori /mnt/prova2 amb la carpeta lost+found">
+
+      <h3>2.3. Comparació dels hash</h3>
+      <p>Una vegada completada la recuperació, comparem els hash dels fitxers
+         recuperats amb els dels fitxers originals i ens adonem que són el
+         mateix, encara que ens falta el fitxer de text.</p>
+      <pre><code>sha256sum recup.4/*.png recup.4/*.pdf
+cat originals.sha</code></pre>
+      <img src="./img/fitxers-03.png" alt="Comparació dels hash dels fitxers recuperats amb els dels originals">
+
+      <h3>2.4. Recuperació del fitxer de text</h3>
+      <p>El fitxer de text amb la frase que vam introduir el trobem buscant
+         la paraula <strong>pizza</strong> entre tots els fitxers del disc.</p>
+      <pre><code>strings -e S disc.img | grep pizza</code></pre>
+      <img src="./img/fitxers-04.png" alt="Resultat de la cerca de la paraula pizza dins de la imatge del disc">
+
+      <h3>2.5. Disc omplert de zeros</h3>
+      <p>L'última captura ens permet apreciar que, en convertir tots els bits
+         del disc en 0, no es pot recuperar res.</p>
+      <pre><code>ls recup_zeros.* | grep -v dovecot
+strings -e S disc.img | grep pizza</code></pre>
+      <img src="./img/fitxers-05.png" alt="Intent de recuperació amb el disc omplert de zeros, sense resultats">
+
+      <h3>2.6. Preguntes</h3>
+      <p><strong>1. Després del nivell 3, el disc semblava buit. On eren
+         realment els vostres fitxers?</strong></p>
+      <p>Els fitxers continuaven al disc sense cap canvi. L'única diferència
+         és que havíem esborrat l'índex que s'encarregava d'indicar on eren,
+         però escanejant el disc es troben fàcilment.</p>
+
+      <p><strong>2. Per què els fitxers recuperats tenen noms diferents dels
+         originals?</strong></p>
+      <p>PhotoRec pot recuperar els fitxers perquè aquests tenen una capçalera
+         que permet saber si són PDF o PNG, però el nom no es guarda en aquesta
+         capçalera (sinó a l'índex) i per tant es perd en la recuperació.</p>
+
+      <p><strong>3. Com podeu demostrar que la foto recuperada és exactament
+         la mateixa que l'original?</strong></p>
+      <p>Ho podem demostrar perquè el hash és el mateix en els dos fitxers.</p>
+
+      <p><strong>4. Per què PhotoRec ha trobat la foto i el PDF, però no
+         notes.txt? Com l'heu trobat igualment?</strong></p>
+      <p>No ha trobat <em>notes.txt</em> perquè un fitxer de text no té
+         capçalera. Tot i això, el podem trobar si recordem alguna paraula del
+         fitxer i fem servir una comanda que la cerqui dins del disc.</p>
+
+      <p><strong>5. Quin nivell de formatatge heu fet al nivell 3 i quin al
+         nivell 5?</strong></p>
+      <p>Al nivell 3 hem fet un formatatge d'alt nivell: únicament havíem
+         esborrat l'índex, i per això PhotoRec ha pogut recuperar els fitxers.
+         Al nivell 5 hem simulat un formatatge de baix nivell: havíem posat
+         tots els bits del disc a 0 i no es va poder recuperar res.</p>
+
       <p class="tornar-index"><a href="#index-apartats">↑ Tornar a l'índex</a></p>
     </article>
 
